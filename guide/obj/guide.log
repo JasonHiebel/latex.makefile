@@ -1,0 +1,66 @@
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011/MacPorts 2011_5) (format=latex 2011.12.5)  10 JUN 2012 17:22
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**guide
+(./guide.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, lo
+aded.
+(/opt/local/share/texmf-texlive-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/opt/local/share/texmf-texlive-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(obj//guide.aux)
+\openout1 = `guide.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
+LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 8.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 8.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 8.
+ (./src/abstract.tex
+Overfull \hbox (0.69737pt too wide) in paragraph at lines 2--3
+[]\OT1/cmr/m/n/9 This is a quick start guide to get-ting up and run-ning with l
+a-tex.makefile
+ []
+
+) [1
+
+] (obj//guide.aux) ) 
+Here is how much of TeX's memory you used:
+ 234 strings out of 495071
+ 2539 string characters out of 3181985
+ 46986 words of memory out of 3000000
+ 3482 multiletter control sequences out of 15000+200000
+ 7887 words of font info for 28 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 23i,6n,17p,303b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on obj//guide.dvi (1 page, 1056 bytes).
