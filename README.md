@@ -1,12 +1,11 @@
 # A Makefile for LaTeX Documents #
 
-This is a makefile for LaTeX documents which seeks to provide a general purpose, easily extendable tool for compiling documents. 
+*This is a makefile for LaTeX documents which seeks to provide a general purpose, easily extendable tool for compiling documents.*
 
----
 
 ## Motivation ##
 
-There are a couple of popular makefiles for LaTeX in existence ([1](http://code.google.com/p/Latex-Makefile/),[2](http://xpt.sourceforge.net/tools/latexmake/#Similar_Tools)); feel free to search yourself and you'll find many more of various quality. Its been my impression that these makefiles are constructed with the goal of providing a holistic and singularly complete experience. That is, this is the one and only makefile you will ever need for your LaTeX documents. The result of this motivation is, predictably, complexity.
+There are a couple of popular makefiles for LaTeX in existence ([1](http://code.google.com/p/Latex-Makefile/), [2](http://xpt.sourceforge.net/tools/latexmake/#Similar_Tools)); feel free to search yourself and you'll find many more of various quality. Its been my impression that these makefiles are constructed with the goal of providing a holistic and singularly complete experience. That is, this is the one and only makefile you will ever need for your LaTeX documents. The result of this motivation is, predictably, complexity.
 
 Here I take an alternative approach. Here we seek to provide the **cleanest approach** to compiling documents which fall under a vast majority of possible use cases. Beyond that, the makefile should be amenable to alteration so that an author can quickly digest and alter the makefile to account for whatever workflow they need for that particular document.
 
@@ -18,7 +17,7 @@ The makefile makes only the following assumptions about the structure of your pr
 
 2. any files on which you want to condition recompilation must exist in the directory structure rooted at the directory in which the makefile exists.
 
-Place a copy of the makefile in the root directory of your project. Feel free to rename the file to suit your needs; if you rename it to be "Makefile" or "makefile" so that it will automatically be recognized by make. Alternatively you are free to use make with the -f, --file, or --makefile flags to specify latex.makefile as your makefile.
+Place a copy of the makefile in the root directory of your project. Feel free to rename the file to suit your needs; if you rename it to be "Makefile" or "makefile" so that it will automatically be recognized by make. Alternatively you are free to use make with the -f or --file flags to specify latex.makefile as your makefile.
 
 Next we must specify the name of the main .tex file. This will serve as the project name for the purposes of compilation. Let consider a hypothetical resume document which uses resume.tex as the primary .tex file. At the beginning of the makefile you would add the line
 
@@ -28,11 +27,11 @@ informing the makefile to use resume.tex when compiling the document and will th
 
 There are three primary targets defined.
 
-- default -- Compiles the document and converts the result to a PDF file.
+- *default*: Compiles the document and converts the result to a PDF file.
 
-- display -- Displays the compiled document in a standard PDF viewer. Linux uses Evince and Mac OSX uses the system specified default (likely Preview).
+- *display*: Displays the compiled document in a standard PDF viewer. Linux uses Evince and Mac OSX uses the system specified default (likely Preview).
 
-- clean --  The quintessential target. Removes the obj/ folder and thus removes and generated files.
+- *clean*:  The quintessential target. Removes the obj/ folder and thus removes and generated files.
 
 
 ## Customization ##
