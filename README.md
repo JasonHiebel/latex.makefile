@@ -6,7 +6,7 @@ This is a makefile for LaTeX documents which seeks to provide a general purpose,
 
 ## Motivation ##
 
-There are a couple of popular makefiles for LaTeX in existence ([1](http://code.google.com/p/Latex-Makefile/), [2](http://xpt.sourceforge.net/tools/latexmake/#Similar_Tools)); feel free to search yourself and you'll find many more of various quality. Its been my impression that these makefiles are constructed with the goal of providing a holistic and singularly complete experience. That is, this is the one and only makefile you will ever need for your LaTeX documents. The result of this motivation is, predictably, complexity.
+There are a couple of popular makefiles for LaTeX in existence ([1](http://code.google.com/p/Latex-Makefile/),[2](http://xpt.sourceforge.net/tools/latexmake/#Similar_Tools)); feel free to search yourself and you'll find many more of various quality. Its been my impression that these makefiles are constructed with the goal of providing a holistic and singularly complete experience. That is, this is the one and only makefile you will ever need for your LaTeX documents. The result of this motivation is, predictably, complexity.
 
 Here I take an alternative approach. Here we seek to provide the **cleanest approach** to compiling documents which fall under a vast majority of possible use cases. Beyond that, the makefile should be amenable to alteration so that an author can quickly digest and alter the makefile to account for whatever workflow they need for that particular document.
 
@@ -22,7 +22,7 @@ Place a copy of the makefile in the root directory of your project. Feel free to
 
 Next we must specify the name of the main .tex file. This will serve as the project name for the purposes of compilation. Let consider a hypothetical resume document which uses resume.tex as the primary .tex file. At the beginning of the makefile you would add the line
 
-        PROJECT = resume
+    PROJECT = resume
 
 informing the makefile to use resume.tex when compiling the document and will then generate obj/resume.dvi, obj/resume.ps, and obj/resume.pdf.
 
