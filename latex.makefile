@@ -17,21 +17,18 @@ default: obj/$(PROJECT).pdf
 display: default
 	(${PDFVIEWER} obj/$(PROJECT).pdf &)
 
-### Compilation Flags
-LATEX_FLAGS  = -halt-on-error -quiet -output-directory obj/
-DVIPS_FLAGS  = -q -Ppdf -G0 -tletter -updftex.map
-PS2PDF_FLAGS = -r1800 -dPDFSettings=/printer -dCompatibilityLevel=1.4 -dMaxSubsetPct=0 -dSubsetFonts-false -dEmbedAllFonts=true -sPAPERSIZE=letter
 
+### Compilation Flags
+PDFLATEX_FLAGS  = -halt-on-error -quiet -output-directory obj/
+
+TEXINPUTS = .:obj/
 TEXMFOUTPUT = obj/
 
 
 ### File Types (for dependancies)
-TEX_FILES = $(shell find . -name '*.tex')
-BIB_FILES = $(shell find . -name '*.bib')
-STY_FILES = $(shell find . -name '*.sty')
-CLS_FILES = $(shell find . -name '*.cls')
-BST_FILES = $(shell find . -name '*.bst')
-EPS_FILES = $(shell find . -name '*.eps')
+TEX_FILES = $(shell find . -name '*.tex' -or -name '*.sty' -or -name '*.sty')
+BIB_FILES = $(shell find . -name '*.bib' -or -name '*.bst')
+IMG_FILES = $(shell find . -path '*.jpg' -or -path '*.png' -or \( \! -path './obj/*.pdf' -path '*.pdf' \) )
 
 
 ### Standard PDF Viewers
@@ -69,25 +66,14 @@ clean::
 obj/:
 	mkdir -p obj/
 
-obj/$(PROJECT).aux: $(TEX_FILES) $(STY_FILES) $(CLS_FILES) $(EPS_FILES) | obj/
-	latex $(LATEX_FLAGS) $(PROJECT)
+obj/$(PROJECT).aux: $(TEX_FILES) $(IMG_FILES) | obj/
+	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
 	
-obj/$(PROJECT).bbl: $(BIB_FILES) $(BST_FILES) | obj/$(PROJECT).aux
+obj/$(PROJECT).bbl: $(BIB_FILES) | obj/$(PROJECT).aux
 ifneq ($(BIB_FILES),)
 	bibtex obj/$(PROJECT)
-	latex $(LATEX_FLAGS) $(PROJECT)
+	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
 endif
 	
-obj/$(PROJECT).dvi: obj/$(PROJECT).aux obj/$(PROJECT).bbl
-	latex $(LATEX_FLAGS) $(PROJECT)
-
-
-### Conversion
-# Convert the DVI file generated above in to a postscript and PDF file format.
-# Its assumed that the final product is to be a PDF.
-
-obj/$(PROJECT).ps : obj/$(PROJECT).dvi
-	dvips $(DVIPS_FLAGS) obj/$(PROJECT).dvi -o obj/$(PROJECT).ps
-	
-obj/$(PROJECT).pdf: obj/$(PROJECT).ps
-	ps2pdf14 $(PS2PDF_FLAGS) obj/$(PROJECT).ps obj/$(PROJECT).pdf
+obj/$(PROJECT).pdf: obj/$(PROJECT).aux obj/$(PROJECT).bbl
+	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
