@@ -15,31 +15,29 @@
 default: obj/$(PROJECT).pdf
 
 display: default
-	(${PDFVIEWER} obj/$(PROJECT).pdf &)
+	(${VIEWER} obj/$(PROJECT).pdf &)
 
 
 ### Compilation Flags
-PDFLATEX_FLAGS  = -halt-on-error -quiet -output-directory obj/
+LATEX_FLAGS  = -halt-on-error -quiet -output-directory obj/
 
 TEXINPUTS = .:obj/
 TEXMFOUTPUT = obj/
 
 
 ### File Types (for dependancies)
-TEX_FILES = $(shell find . -name '*.tex' -or -name '*.sty' -or -name '*.sty')
-BIB_FILES = $(shell find . -name '*.bib' -or -name '*.bst')
-IMG_FILES = $(shell find . -path '*.jpg' -or -path '*.png' -or \( \! -path './obj/*.pdf' -path '*.pdf' \) )
+TEX_FILES = $(shell find .    -name '*.tex' -or -name '*.sty' -or -name '*.cls')
+BIB_FILES = $(shell find .    -name '*.bib' -or -name '*.bst')
+IMG_FILES = $(shell find . \( -name '*.pdf' -or -name '*.png' -or -name '*.jpg' \) -not -wholename './obj/**')
 
 
 ### Standard PDF Viewers
-
 UNAME := $(shell uname)
-
 ifeq ($(UNAME), Linux)
-PDFVIEWER = evince
+	VIEWER = evince
 endif
 ifeq ($(UNAME), Darwin)
-PDFVIEWER = open
+	VIEWER = open
 endif
 
 
@@ -67,13 +65,15 @@ obj/:
 	mkdir -p obj/
 
 obj/$(PROJECT).aux: $(TEX_FILES) $(IMG_FILES) | obj/
-	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
+	pdflatex $(LATEX_FLAGS) $(PROJECT)
 	
 obj/$(PROJECT).bbl: $(BIB_FILES) | obj/$(PROJECT).aux
 ifneq ($(BIB_FILES),)
 	bibtex obj/$(PROJECT)
-	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
+	pdflatex $(LATEX_FLAGS) $(PROJECT)
+else
+	touch obj/${PROJECT}.bbl
 endif
 	
 obj/$(PROJECT).pdf: obj/$(PROJECT).aux obj/$(PROJECT).bbl
-	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
+	pdflatex $(LATEX_FLAGS) $(PROJECT)
