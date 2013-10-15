@@ -1,4 +1,4 @@
-### Latex.Make
+### latex.makefile
 # Author: Jason Hiebel
 
 # This is a simple makefile for compiling LaTeX documents. The core assumption
@@ -7,9 +7,10 @@
 # embedded. While typically overkill, the detriment to doing so is negligible.
 
 # Targets:
-#    default : compiles the document in to three formats (DVI -> PS -> PDF)
+#    default : compiles the document to a PDF file using the defined
+#              latex generating engine. (pdflatex, xelatex, etc)
 #    display : displays the compiled document in a common PDF viewer.
-#              (Linux = Evince, OSX = OS Set Default)
+#              (currently linux = evince, OSX = open)
 #    clean   : removes the obj/ directory holding temporary files
 
 default: obj/$(PROJECT).pdf
@@ -19,25 +20,30 @@ display: default
 
 
 ### Compilation Flags
-PDFLATEX_FLAGS  = -halt-on-error -quiet -output-directory obj/
+PDFLATEX_FLAGS  = -halt-on-error -output-directory obj/
 
 TEXINPUTS = .:obj/
 TEXMFOUTPUT = obj/
 
 
 ### File Types (for dependancies)
-TEX_FILES = $(shell find . -name '*.tex' -or -name '*.sty' -or -name '*.sty')
-BIB_FILES = $(shell find . -name '*.bib' -or -name '*.bst')
+TEX_FILES = $(shell find . -name '*.tex' -or -name '*.sty' -or -name '*.cls')
+BIB_FILES = $(shell find . -name '*.bib')
+BST_FILES = $(shell find . -name '*.bst')
 IMG_FILES = $(shell find . -path '*.jpg' -or -path '*.png' -or \( \! -path './obj/*.pdf' -path '*.pdf' \) )
 
 
 ### Standard PDF Viewers
+# Defines a set of standard PDF viewer tools to use when displaying the result
+# with the display target. Currently chosen are defaults which should work on
+# most linux systems with GNOME installed and on all OSX systems.
 
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
 PDFVIEWER = evince
 endif
+
 ifeq ($(UNAME), Darwin)
 PDFVIEWER = open
 endif
@@ -51,7 +57,6 @@ endif
 clean::
 	rm -rf obj/
 
-
 ### Core Latex Generation
 # Performs the typical build process for latex generations so that all
 # references are resolved correctly. If adding components to this run-time
@@ -62,18 +67,21 @@ clean::
 # Order-only prerequisites do not effect the target -- if the order-only
 # prerequisite has changed and none of the normal prerequisites have changed
 # then this target IS NOT run.
+#
+# In order to function for projects which use a subset of the provided features
+# it is important to verify that optional dependancies exist before calling a
+# target; for instance, see how bibliography files (.bbl) are handled as a
+# dependency.
 
 obj/:
 	mkdir -p obj/
 
 obj/$(PROJECT).aux: $(TEX_FILES) $(IMG_FILES) | obj/
-	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
-	
+	xelatex $(PDFLATEX_FLAGS) $(PROJECT)
+
 obj/$(PROJECT).bbl: $(BIB_FILES) | obj/$(PROJECT).aux
-ifneq ($(BIB_FILES),)
 	bibtex obj/$(PROJECT)
-	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
-endif
+	xelatex $(PDFLATEX_FLAGS) $(PROJECT)
 	
-obj/$(PROJECT).pdf: obj/$(PROJECT).aux obj/$(PROJECT).bbl
-	pdflatex $(PDFLATEX_FLAGS) $(PROJECT)
+obj/$(PROJECT).pdf: obj/$(PROJECT).aux $(if $(BIB_FILES), obj/$(PROJECT).bbl)
+	xelatex $(PDFLATEX_FLAGS) $(PROJECT)
